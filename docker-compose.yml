@@ -14,6 +14,9 @@ services:
       - producao-network
     volumes:
       - dbdata:/opt/oracle/oradata
+    environment:
+      - "ORACLE_SID=sys"
+      - "ORACLE_PWD=Doug@123"
 
   apiproducao:
     build:
