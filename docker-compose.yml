@@ -9,8 +9,11 @@ services:
         - DB_EDITION=xe
     ports:
       - "5500:5501"
+      - "1521:1521"
     networks:
       - producao-network
+    volumes:
+      - dbdata:/opt/oracle/oradata
 
   apiproducao:
     build:
@@ -26,3 +29,6 @@ services:
 
 networks: 
   producao-network:
+    
+volumes:
+  dbdata:
