@@ -13,7 +13,8 @@ services:
       - producao-network
 
   apiproducao:
-    image: continentalproducaoapi:dev
+    build:
+      context: ./docker-oracle-poc
     depends_on:
       - dbproducao
     ports:
@@ -25,4 +26,3 @@ services:
 
 networks: 
   producao-network:
-    driver: bridge
