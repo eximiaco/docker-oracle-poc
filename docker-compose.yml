@@ -1,0 +1,28 @@
+﻿version: '3'
+
+services:
+  dbproducao:
+    image: oracle/database:18.4.0-xe
+    build:
+      context: ./Db
+      args:
+        - DB_EDITION=xe
+    ports:
+      - "5500:5501"
+    networks:
+      - producao-network
+
+  apiproducao:
+    image: continentalproducaoapi:dev
+    depends_on:
+      - dbproducao
+    ports:
+      - "80:8080"
+    networks:
+      - producao-network
+    environment:
+      - ASPNETCORE_URLS=http//+:80
+
+networks: 
+  producao-network:
+    driver: bridge
