@@ -1,7 +1,7 @@
 ﻿version: '3'
 
 services:
-  dbproducao:
+  db:
     image: oracle/database:18.4.0-xe
     build:
       context: ./Db
@@ -11,27 +11,31 @@ services:
       - "5500:5501"
       - "1521:1521"
     networks:
-      - producao-network
+      - dev-network
     volumes:
       - dbdata:/opt/oracle/oradata
     environment:
       - "ORACLE_SID=sys"
-      - "ORACLE_PWD=Doug@123"
+      - "ORACLE_PWD=Doug_1234"
 
-  apiproducao:
+  api:
     build:
-      context: ./docker-oracle-poc
+      context: .
+      dockerfile: ./docker-oracle-poc/Dockerfile
     depends_on:
-      - dbproducao
+      - db
     ports:
-      - "80:8080"
+      - "8080:80"
     networks:
-      - producao-network
+      - dev-network
     environment:
-      - ASPNETCORE_URLS=http//+:80
+      - "ASPNETCORE_URLS=http://+:80"
+      - "ASPNETCORE_ENVIRONMENT=Development"
 
 networks: 
-  producao-network:
+  dev-network:
     
 volumes:
   dbdata:
+    
+    

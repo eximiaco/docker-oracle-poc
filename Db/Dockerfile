@@ -18,7 +18,7 @@
 #
 # Pull base image
 # ---------------
-FROM oraclelinux
+FROM oraclelinux:7-slim
 
 # Labels
 # ------
@@ -46,6 +46,13 @@ ENV ORACLE_BASE=/opt/oracle \
     CHECK_DB_FILE="checkDBStatus.sh" \
     INSTALL_DIR="$HOME/install" \
     ORACLE_DOCKER_INSTALL="true"
+
+# Use second ENV so that variable get substituted
+ENV PATH=$ORACLE_HOME/bin:$PATH
+
+# Copy binaries
+# -------------
+COPY $CHECK_SPACE_FILE $RUN_FILE $PWD_FILE $CHECK_DB_FILE $CONF_FILE $INSTALL_DIR/
 
 # Use second ENV so that variable get substituted
 ENV PATH=$ORACLE_HOME/bin:$PATH
