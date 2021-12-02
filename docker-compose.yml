@@ -15,7 +15,6 @@ services:
     volumes:
       - dbdata:/opt/oracle/oradata
     environment:
-      - "ORACLE_SID=sys"
       - "ORACLE_PWD=Doug_1234"
 
   api:

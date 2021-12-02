@@ -4,6 +4,7 @@ using System.Linq;
 using docker_oracle_poc;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using docker_oracle_poc.Data;
 
 namespace docker_oracle_poc.Controllers
 {
@@ -18,10 +19,13 @@ namespace docker_oracle_poc.Controllers
         };
 
         private readonly ILogger<WeatherForecastController> _logger;
+        private readonly DataContext _context;
 
-        public WeatherForecastController(ILogger<WeatherForecastController> logger)
+        public WeatherForecastController(ILogger<WeatherForecastController> logger, DataContext context)
         {
+            _context = context;
             _logger = logger;
+            // context.Database.Migrate();
         }
 
         [HttpGet(Name = "GetWeatherForecast")]
