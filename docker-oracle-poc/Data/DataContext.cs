@@ -9,6 +9,8 @@ namespace docker_oracle_poc.Data
         {
             
         }
+
+        
         
         public DbSet<Certificate> Certificates { get; set; }
     }

@@ -4,8 +4,19 @@ namespace docker_oracle_poc.Data.Entities
 {
     public class Certificate
     {
-        public Guid Id { get; set; }
+        public Certificate(Guid id, int number)
+        {   
+            Id = id;
+            Number = number;
+        }
 
-        public int Number { get; set; }
+        public Certificate()
+        {
+            
+        }
+
+        public Guid Id { get; private set; }
+
+        public int Number { get; private set; }
     }
 }

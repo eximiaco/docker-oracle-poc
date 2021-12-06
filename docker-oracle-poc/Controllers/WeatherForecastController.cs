@@ -5,41 +5,42 @@ using docker_oracle_poc;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using docker_oracle_poc.Data;
+using docker_oracle_poc.Data.Entities;
 
 namespace docker_oracle_poc.Controllers
 {
 
     [ApiController]
     [Route("[controller]")]
-    public class WeatherForecastController : ControllerBase
+    public class CertificatesController : ControllerBase
     {
         private static readonly string[] Summaries = new[]
         {
             "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
         };
 
-        private readonly ILogger<WeatherForecastController> _logger;
+        private readonly ILogger<CertificatesController> _logger;
         private readonly DataContext _context;
 
-        public WeatherForecastController(ILogger<WeatherForecastController> logger, DataContext context)
+        public CertificatesController(ILogger<CertificatesController> logger, DataContext context)
         {
             _context = context;
             _logger = logger;
-            // context.Database.Migrate();
+        }       
+
+        
+        [HttpGet]
+        public IEnumerable<Certificate> GetCertificates()
+        {
+           return _context.Certificates.ToList();
         }
 
-        [HttpGet(Name = "GetWeatherForecast")]
-        public IEnumerable<WeatherForecast> Get()
+
+        [HttpPost]
+        public void AddCertificate(int number)
         {
-            var random = new Random();
-            
-            return Enumerable.Range(1, 5).Select(index => new WeatherForecast
-                {
-                    Date = DateTime.Now.AddDays(index),
-                    TemperatureC = random.Next(-20, 55),
-                    Summary = Summaries[random.Next(Summaries.Length)]
-                })
-                .ToArray();
+            _context.Certificates.Add(new Certificate(Guid.NewGuid(), number));
+            _context.SaveChanges();
         }
     }
 }
